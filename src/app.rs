@@ -12,7 +12,7 @@ pub fn App(cx: Scope) -> impl IntoView {
 
         // injects a stylesheet into the document <head>
         // id=leptos means cargo-leptos will hot-reload this stylesheet
-        <Stylesheet id="leptos" href="/pkg/start-axum.css"/>
+        <Stylesheet id="leptos" href="/pkg/start-axum-tailwind.css"/>
 
         // sets the document title
         <Title text="Welcome to Leptos"/>
@@ -36,7 +36,7 @@ fn HomePage(cx: Scope) -> impl IntoView {
     let on_click = move |_| set_count.update(|count| *count += 1);
 
     view! { cx,
-        <h1>"Welcome to Leptos!"</h1>
-        <button on:click=on_click>"Click Me: " {count}</button>
+        <h1 class="font-bold text-2xl">"Welcome to Leptos!"</h1>
+        <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" on:click=on_click>"Click Me: " {count}</button>
     }
 }

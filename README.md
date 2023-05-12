@@ -5,19 +5,26 @@
 
 # Leptos Axum Starter Template
 
-This is a template for use with the [Leptos](https://github.com/leptos-rs/leptos) web framework and the [cargo-leptos](https://github.com/akesson/cargo-leptos) tool using [Axum](https://github.com/tokio-rs/axum).
+This is a template for use with the [Leptos](https://github.com/leptos-rs/leptos) web framework and the [cargo-leptos](https://github.com/akesson/cargo-leptos) tool using [Axum](https://github.com/tokio-rs/axum) and [tailwindcss](https://tailwindcss.com)
 
 ## Creating your template repo
 
-If you don't have `cargo-leptos` installed you can install it with
+If you don't have `cargo-leptos` installed, you can install it with
 
 ```bash
 cargo install cargo-leptos
 ```
 
-Then run
+If you don't have tailwind installed, you can install it with
+
 ```bash
-cargo leptos new --git leptos-rs/start-axum
+npm install -D tailwindcss
+```
+
+Then run
+
+```bash
+cargo leptos new --git evan-hines-js/start-axum-tailwind
 ```
 
 to generate a new project template.
@@ -33,7 +40,14 @@ Addtionally, Cargo.toml may need updating as new versions of the dependencies ar
 ## Running your project
 
 ```bash
+npx tailwindcss -i ./style/tailwind.css -o ./style/output.css
 cargo leptos watch
+```
+
+You will need to re-compile your tailwind whenever you add new classes to your HTML views. In order to watch the repository for changes automatically, you can run the `watch.sh` script on MacOS, Linux, or WSL on Windows:
+
+```sh
+sh watch.sh
 ```
 
 ## Installing Additional Tools
@@ -73,12 +87,12 @@ After running a `cargo leptos build --release` the minimum files needed are:
 
 Copy these files to your remote server. The directory structure should be:
 ```text
-start-axum
+start-axum-tailwind
 site/
 ```
 Set the following enviornment variables (updating for your project as needed):
 ```text
-LEPTOS_OUTPUT_NAME="start-axum"
+LEPTOS_OUTPUT_NAME="start-axum-tailwind"
 LEPTOS_SITE_ROOT="site"
 LEPTOS_SITE_PKG_DIR="pkg"
 LEPTOS_SITE_ADDR="127.0.0.1:3000"
