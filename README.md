@@ -43,14 +43,15 @@ By default, `cargo-leptos` uses `nightly` Rust, `cargo-generate`, and `sass`. If
 1. `rustup toolchain install nightly --allow-downgrade` - make sure you have Rust nightly
 2. `rustup target add wasm32-unknown-unknown` - add the ability to compile Rust to WebAssembly
 3. `cargo install cargo-generate` - install `cargo-generate` binary (should be installed automatically in future)
-4. `npm install -g sass` - install `dart-sass` (should be optional in future
+4. `npm install -g sass` - install `dart-sass` (should be optional in future)
 
 ## Compiling for Release
+
 ```bash
 cargo leptos build --release
 ```
 
-Will generate your server binary in target/server/release and your site package in target/site
+Will generate your server binary in `target/server/release` and your site package in `target/site`
 
 ## Testing Your Project
 ```bash
@@ -71,12 +72,15 @@ After running a `cargo leptos build --release` the minimum files needed are:
 2. The `site` directory and all files within located in `target/site`
 
 Copy these files to your remote server. The directory structure should be:
+
 ```text
 {{project-name}}
 site/
 ```
+
 Set the following environment variables (updating for your project as needed):
-```text
+
+```bash
 LEPTOS_OUTPUT_NAME="{{project-name}}"
 LEPTOS_SITE_ROOT="site"
 LEPTOS_SITE_PKG_DIR="pkg"
