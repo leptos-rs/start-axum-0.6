@@ -7,7 +7,9 @@ async fn main() {
     use {{crate_name}}::app::*;
     use {{crate_name}}::fileserv::file_and_error_handler;
 
-    simple_logger::init_with_level(log::Level::Debug).expect("couldn't initialize logging");
+    tracing_subscriber::fmt()
+        .with_max_level(tracing::Level::DEBUG)
+        .init();
 
     // Setting get_configuration(None) means we'll be using cargo-leptos's env values
     // For deployment these variables are:
