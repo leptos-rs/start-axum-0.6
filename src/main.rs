@@ -3,7 +3,7 @@
 async fn main() {
     use axum::{routing::post, Router};
     use leptos::*;
-    use leptos_axum::{generate_route_list, LeptosRoutes};
+    use leptos_axum::LeptosRoutes;
     use {{crate_name}}::app::*;
     use {{crate_name}}::fileserv::file_and_error_handler;
 
@@ -17,12 +17,11 @@ async fn main() {
     let conf = get_configuration(None).await.unwrap();
     let leptos_options = conf.leptos_options;
     let addr = leptos_options.site_addr;
-    let routes = generate_route_list(App);
 
     // build our application with a route
     let app = Router::new()
         .route("/api/*fn_name", post(leptos_axum::handle_server_fns))
-        .leptos_routes(&leptos_options, routes, App)
+        .leptos_routes(&leptos_options, App)
         .fallback(file_and_error_handler)
         .with_state(leptos_options);
 
