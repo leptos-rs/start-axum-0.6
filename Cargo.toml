@@ -80,9 +80,6 @@ browserquery = "defaults"
 # Set by cargo-leptos watch when building with that tool. Controls whether autoreload JS will be included in the head
 watch = false
 
-# The environment Leptos will run in, usually either "DEV" or "PROD"
-env = "DEV"
-
 # The features to use when compiling the bin target
 #
 # Optional. Can be over-ridden with the command line parameter --bin-features
