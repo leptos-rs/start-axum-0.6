@@ -45,6 +45,6 @@ fn HomePage() -> impl IntoView {
 
     view! {
         <h1>"Welcome to Leptos!"</h1>
-        <button on:click=on_click>"Click Me: " {count}</button>
+        <button on:click=on_click>"Click Me: " { {%- if nightly == "Yes" -%} count {%- else -%} move || count.get() {%- endif -%} }</button>
     }
 }
