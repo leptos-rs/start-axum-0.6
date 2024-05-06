@@ -1,0 +1,5 @@
+[placeholders]
+nightly = { prompt = "Use nightly features?", choices = ["No", "Yes"], default = "No", type = "string"}
+
+[conditional.'nightly == "No"']
+ignore = ["rust-toolchain.toml"]
