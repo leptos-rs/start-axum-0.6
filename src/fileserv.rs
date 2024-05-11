@@ -17,7 +17,15 @@ pub async fn file_and_error_handler(
     let root = options.site_root.clone();
     let (parts, body) = req.into_parts();
 
-    let res = get_static_file(Request::from_parts(parts.clone(), ()), &root)
+    let mut static_parts = parts.clone();
+    static_parts.headers.clear();
+    if let Some(encodings) = parts.headers.get("accept-encoding") {
+        static_parts
+            .headers
+            .insert("accept-encoding", encodings.clone());
+    }
+
+    let res = get_static_file(Request::from_parts(static_parts, Body::empty()), &root)
         .await
         .unwrap();
 
@@ -32,7 +40,7 @@ pub async fn file_and_error_handler(
 }
 
 async fn get_static_file(
-    request: Request<()>,
+    request: Request<Body>,
     root: &str,
 ) -> Result<Response<Body>, (StatusCode, String)> {
     // `ServeDir` implements `tower::Service` so we can call it with `tower::ServiceExt::oneshot`
