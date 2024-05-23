@@ -12,7 +12,7 @@ This is a template for use with the [Leptos](https://github.com/leptos-rs/leptos
 If you don't have `cargo-leptos` installed you can install it with
 
 ```bash
-cargo install cargo-leptos
+cargo install cargo-leptos --locked
 ```
 
 Then run
