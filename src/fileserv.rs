@@ -7,8 +7,9 @@ use axum::{
     response::IntoResponse,
 };
 use leptos::*;
+use std::convert::Infallible;
 use tower::ServiceExt;
-use tower_http::services::ServeDir;
+use tower_http::services::{fs::ServeFileSystemResponseBody, ServeDir};
 
 pub async fn file_and_error_handler(
     State(options): State<LeptosOptions>,
@@ -42,19 +43,12 @@ pub async fn file_and_error_handler(
 async fn get_static_file(
     request: Request<Body>,
     root: &str,
-) -> Result<Response<Body>, (StatusCode, String)> {
+) -> Result<Response<ServeFileSystemResponseBody>, Infallible> {
     // `ServeDir` implements `tower::Service` so we can call it with `tower::ServiceExt::oneshot`
     // This path is relative to the cargo root
-    match ServeDir::new(root)
+    ServeDir::new(root)
         .precompressed_gzip()
         .precompressed_br()
         .oneshot(request)
         .await
-    {
-        Ok(res) => Ok(res.into_response()),
-        Err(err) => Err((
-            StatusCode::INTERNAL_SERVER_ERROR,
-            format!("Error serving files: {err}"),
-        )),
-    }
 }
