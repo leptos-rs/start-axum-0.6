@@ -4,7 +4,7 @@ async fn main() {
     use axum::Router;
     use leptos::prelude::get_configuration;
     use leptos_axum::{generate_route_list, LeptosRoutes};
-    use {{crate_name}}::app::App;
+    use {{crate_name}}::app::{shell, App};
 
     // Setting get_configuration(None) means we'll be using cargo-leptos's env values
     // For deployment these variables are:
