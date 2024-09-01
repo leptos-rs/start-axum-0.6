@@ -7,22 +7,19 @@ edition = "2021"
 crate-type = ["cdylib", "rlib"]
 
 [dependencies]
-axum = { version = "0.7", optional = true }
-console_error_panic_hook = "0.1"
-leptos = { version = "0.6"{% if nightly == "Yes" %}, features = ["nightly"]{% endif %} }
-leptos_axum = { version = "0.6", optional = true }
-leptos_meta = { version = "0.6"{% if nightly == "Yes" %}, features = ["nightly"]{% endif %} }
-leptos_router = { version = "0.6"{% if nightly == "Yes" %}, features = ["nightly"]{% endif %} }
-tokio = { version = "1", features = ["rt-multi-thread"], optional = true }
-tower = { version = "0.4", optional = true }
-tower-http = { version = "0.5", features = ["fs"], optional = true }
+axum = { version = "0.7.5", optional = true }
+console_error_panic_hook = "0.1.7"
+leptos = { version = "0.7.0-beta"}
+leptos_axum = { version = "0.7.0-beta", optional = true }
+leptos_meta = { version = "0.7.0-beta"}
+leptos_router = { version = "0.7.0-beta" }
+tokio = { version = "1.40.0", features = ["rt-multi-thread"], optional = true }
+tower = { version = "0.5.0", optional = true }
+tower-http = { version = "0.5.2", features = ["fs"], optional = true }
 wasm-bindgen = "=0.2.93"
-thiserror = "1"
-tracing = { version = "0.1", optional = true }
-http = "1"
 
 [features]
-hydrate = ["leptos/hydrate", "leptos_meta/hydrate", "leptos_router/hydrate"]
+hydrate = ["leptos/hydrate"]
 ssr = [
     "dep:axum",
     "dep:tokio",
@@ -32,7 +29,6 @@ ssr = [
     "leptos/ssr",
     "leptos_meta/ssr",
     "leptos_router/ssr",
-    "dep:tracing",
 ]
 
 # Defines a size-optimized profile for the WASM bundle in release mode
