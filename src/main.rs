@@ -1,11 +1,11 @@
 #[cfg(feature = "ssr")]
 #[tokio::main]
 async fn main() {
-    use axum::Router;
+    use axum::{routing::get, Router}; 
     use leptos::*;
     use leptos_axum::{generate_route_list, LeptosRoutes};
     use {{crate_name}}::app::*;
-    use {{crate_name}}::fileserv::file_and_error_handler;
+    use {{crate_name}}::fileserv::{error_handler, assets_service, static_file_service};
 
     // Setting get_configuration(None) means we'll be using cargo-leptos's env values
     // For deployment these variables are:
@@ -19,8 +19,14 @@ async fn main() {
 
     // build our application with a route
     let app = Router::new()
+        // serve JS/WASM/CSS from `pkg`
+        .route("/pkg/*file", get(static_file_service))
+        // serve other assets from the `assets` directory
+        .route("/assets/*file", get(assets_service))
+        // serve the favicon from /favicon.ico
+        .route("/favicon.ico", get(static_file_service))
         .leptos_routes(&leptos_options, routes, App)
-        .fallback(file_and_error_handler)
+        .fallback(error_handler)
         .with_state(leptos_options);
 
     let listener = tokio::net::TcpListener::bind(&addr).await.unwrap();

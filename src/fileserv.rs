@@ -6,11 +6,37 @@ use axum::{
     http::{Request, Response, StatusCode},
     response::IntoResponse,
 };
+use http::Uri;
 use leptos::*;
 use tower::ServiceExt;
 use tower_http::services::ServeDir;
 
-pub async fn file_and_error_handler(
+pub async fn error_handler(
+    State(options): State<LeptosOptions>,
+    req: Request<Body>,
+) -> AxumResponse {
+    let (parts, body) = req.into_parts();
+
+    let handler = leptos_axum::render_app_to_stream(options.to_owned(), App);
+    handler(Request::from_parts(parts, body))
+        .await
+        .into_response()
+}
+
+pub async fn assets_service(state: State<LeptosOptions>, req: Request<Body>) -> AxumResponse {
+    let new_uri = &req.uri().to_string();
+    let new_uri = format!("/{}", new_uri.split("/").last().unwrap());
+    let new_uri = new_uri.parse::<Uri>().unwrap();
+
+    let (parts, body) = req.into_parts();
+
+    let mut reforged_req = Request::from_parts(parts, body);
+    *reforged_req.uri_mut() = new_uri.to_owned();
+
+    static_file_service(state, reforged_req).await
+}
+
+pub async fn static_file_service(
     State(options): State<LeptosOptions>,
     req: Request<Body>,
 ) -> AxumResponse {
