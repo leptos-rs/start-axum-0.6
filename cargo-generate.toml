@@ -3,3 +3,6 @@ nightly = { prompt = "Use nightly features?", choices = ["No", "Yes"], default =
 
 [conditional.'nightly == "No"']
 ignore = ["rust-toolchain.toml"]
+
+[template]
+exclude = ["public/*"]
